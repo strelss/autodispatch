@@ -1,4 +1,6 @@
+import aiohttp
 from aiohttp import web
+from aiohttp import ClientSession
 import json
 import requests
 
@@ -14,9 +16,14 @@ async def refunc(request):           #получаем запрос
         },
         'id': 100500
     }
-    if res['id'] == 6:      #условие по перераспределению заказа между водителями
-        result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', resrart)
-    if result.json()['status'] == 1:  #проверка ответа сервера
+    if res['id'] == 6:                              #условие по перераспределению заказа между водителями
+        async def getReq(url):                      #создание асинхронного requests
+            async with ClientSession() as session:
+                async with session.post(url) as res:
+                    res = await res.read()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(getReq("https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc", resrart))
+    if res.json()['status'] == 1:                    #проверка ответа сервера
         return web.Response(text='Заказ перераспределен.')
     else:
         return web.Response(text='Ошибка ' + result)

@@ -1,22 +1,37 @@
 import requests
 import json
 
-req = {
+# req = {
+#        "jsonrpc":"2.0",
+#        "method":"order.state",
+#        "params":{
+#           "order_id":12344,
+#           "state":2
+#        },
+#        "id":100500
+#     }
+# req = json.dumps(req)
+# print(req)
+
+req2 = {
        "jsonrpc":"2.0",
-       "method":"order.state",
+       "method":"message.send.personal",
        "params":{
-          "order_id":12344,
-          "state":2
+          "driver_id":int(11),
+          "text":str('test'),
+          # "title":str('test'),
+          # "message":str('test'),
+          # "timeout":int(3)
        },
        "id":100500
     }
-req = json.dumps(req)
-print(req)
+req2 = json.dumps(req2)
+print(req2)
 
-# # This is connect json
-# result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req)
-# # response = json.loads(result)
-# print(result.json()['id'])
+# This is connect json
+result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
+# response = json.loads(result)
+print(result.json())
 
 # # This is connect API
 # result = requests.get('http://api-demo-kiev.ligataxi.com/api/v1/client/company/')
@@ -36,6 +51,6 @@ print(req)
 # print(result.json())
 
 # This is connect json
-result = requests.post('https://http://localhost:8080', req)
-
-print(result)
+# result = requests.post('https://http://localhost:8080', req)
+#
+# print(result)
