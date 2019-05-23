@@ -13,26 +13,31 @@ import json
 # req = json.dumps(req)
 # print(req)
 
+###################################################################3
+
 req2 = {
        "jsonrpc":"2.0",
-       "method":"message.send.personal",
+       "method":"order.list",
        "params":{
-          "driver_id":int(11),
-          "text":str('test'),
-          # "title":str('test'),
-          # "message":str('test'),
+          # "filters":'1',
+          # "sort":'id',
+          # "limit": 50,
+          # "offset": 0
           # "timeout":int(3)
        },
-       "id":100500
+       'id': 100500
     }
 req2 = json.dumps(req2)
 print(req2)
 
 # This is connect json
 result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
-# response = json.loads(result)
-print(result.json())
+result = result.json()
+print(result)
 
+# {"jsonrpc": "2.0", "method": "order.list", "params": {}, "id": 100500}
+# {"jsonrpc": "2.0", "method": "order.list", "params": {}, "id": 100500}
+#######################################################
 # # This is connect API
 # result = requests.get('http://api-demo-kiev.ligataxi.com/api/v1/client/company/')
 # print(result)
