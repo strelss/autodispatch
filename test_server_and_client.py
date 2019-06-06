@@ -4,9 +4,8 @@ from aiohttp import web
 from aiohttp import ClientSession
 import json
 
-url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'
-async def read_resp(url):                                               #функция создания запроса и обработки ответа
 
+async def read_resp(url, session):                                      #функция создания запроса и обработки ответа
     resrart = {                                                         #параметры с ключами на получение order.list
        "jsonrpc":"2.0",
        "method":"order.list",
@@ -14,16 +13,16 @@ async def read_resp(url):                                               #фун�
        'id': 100500
     }
     print(resrart)
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
-            data = await response.read()                                    #чтение ответа
-            data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
-            print(data)                                                     #вывод в консоль ответа
-            await refunc(data)
+
+    async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
+        data = await response.read()                                    #чтение ответа
+        data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
+        print(data)                                                     #вывод в консоль ответа
+        await refunc(data)
 
 async def refunc(data):
     or_id = data['result'][0]['order_id']
-    type_id = data['result'][0]['type_id']                                  # вытягиваем id заказа
+    type_id = data['result'][0]['type_id']                              # вытягиваем id заказа
     print(type_id)
     print(or_id)
     restart = {
@@ -35,7 +34,7 @@ async def refunc(data):
         'id': 100500
     }
     url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'
-    if type_id == 6:                                                                    #условие по type_id заказа (запуск, если =6)
+    if type_id == 9:                                                                    #условие по type_id заказа (запуск, если =6)
         await autodisp(url, restart)                                                    #запуск функции для запроса на перераспределение заказа
     else:
         print('Нет заказов для перераспределения.')
@@ -68,4 +67,5 @@ app.add_routes([web.post('/', refunc)])
 
 if __name__ == '__main__':
     # web.run_app(app)
-    asyncio.run(read_resp(url))
+    asyncio.run(main())                                                                 #запуск исполнения программы
+

@@ -22,7 +22,7 @@ async def read_resp(url, session):                                      #фун�
     async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
         data = await response.read()                                    #чтение ответа
         data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
-        print(data['result'][0]['type_id'])                            #вытягиваем type_id
+        print(data)                            #вытягиваем type_id
 
 async def main():
     url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'  # урл с апи ключем
