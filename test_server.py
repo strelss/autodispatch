@@ -4,14 +4,14 @@ from aiohttp import web
 from aiohttp import ClientSession
 import json
 
-async def hello(request):
+async def hello(request):                                                   #функция приема и обработки запроса
     print("Incoming request")
     print(request)
-    r = await request.read()
-    r = r.decode("utf-8")
+    r = await request.read()                                                #чтение запроса
+    r = r.decode("utf-8")                                                   #перекодировка запроса
     print(r)
 
-    if r == 'create_new_order':
+    if r == 'create_new_order':                                             #условие на создание заказа
 
         url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'
 
@@ -57,7 +57,7 @@ async def hello(request):
         else:
             print('Нет заказов для перераспределения.')
 
-    elif r == 'pass':
+    elif r == 'pass':                                                                       #Условие по отмене заказа
         print('Заказ был отменен.')
 
     else:
@@ -65,11 +65,8 @@ async def hello(request):
 
     return web.Response(text='ok')
 
-
-
 app = web.Application()
 app.add_routes([web.post('/', hello)])
-
 
 if __name__ == '__main__':
     web.run_app(app)
