@@ -1,61 +1,51 @@
 import requests
 import json
 
-# req = {
-#        "jsonrpc":"2.0",
-#        "method":"order.state",
-#        "params":{
-#           "order_id":12344,
-#           "state":2
-#        },
-#        "id":100500
-#     }
-# req = json.dumps(req)
-# print(req)
+req = {
+       "jsonrpc":"2.0",
+       "method":"order.update",
+       "params":{
+          "order_id":'470',
+          "type_id":'6'
+       },
+       "id":100500
+    }
+req = json.dumps(req)
+print(req)
 
-###################################################################3
+###################################################################
 
 req2 = {
        "jsonrpc":"2.0",
        "method":"order.list",
-       "params":{
-          # "filters":'1',
-          # "sort":'id',
-          # "limit": 50,
-          # "offset": 0
-          # "timeout":int(3)
-       },
+       "params":{},
        'id': 100500
     }
 req2 = json.dumps(req2)
 print(req2)
 
+req3 = {
+       "jsonrpc":"2.0",
+       "method":"order.autodispatch.restart",
+       "params":{
+              "order_id":'387'
+       },
+       'id': 100500
+    }
+req2 = json.dumps(req2)
+print(req3)
+
 # This is connect json
+# result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
+# result = result.json()
+# print(result)
+
+
+# result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req)
+# result = result.json()
+# print(result)
+
+
 result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
 result = result.json()
 print(result)
-
-# {"jsonrpc": "2.0", "method": "order.list", "params": {}, "id": 100500}
-# {"jsonrpc": "2.0", "method": "order.list", "params": {}, "id": 100500}
-#######################################################
-# # This is connect API
-# result = requests.get('http://api-demo-kiev.ligataxi.com/api/v1/client/company/')
-# print(result)
-
-
-# # This is connect json and API
-# result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', {
-#     "jsonrpc": "2.0",
-#     "method": "user.session.authorize",
-#     "params": {
-#         "session_uuid": "f73cc552-f6a6-4db4-aaba-a6ed35310da5",
-#     },
-#     "id": 1
-# })
-# # response = json.loads(result)
-# print(result.json())
-
-# This is connect json
-# result = requests.post('https://http://localhost:8080', req)
-#
-# print(result)

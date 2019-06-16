@@ -11,43 +11,44 @@ async def hello(request):                                                   #ф�
     r = r.decode("utf-8")                                                   #перекодировка запроса
     print(r)
 
-    if r == 'create_new_order':                                             #условие на создание заказа
+    if "order_id" in r:                                                     #условие на создание заказа
+
 
         url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'
 
-        resrart = {                                                         #параметры с ключами на получение order.list
-           "jsonrpc":"2.0",
-           "method":"order.list",
-           "params":{},
-           'id': 100500
-        }
-        print(resrart)
+        # resrart = {                                                         #параметры с ключами на получение order.list
+        #    "jsonrpc":"2.0",
+        #    "method":"order.list",
+        #    "params":{},
+        #    'id': 100500
+        # }
+        # print(resrart)
 
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
-                data = await response.read()                                    #чтение ответа
-                data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
-                print(data)                                                     #вывод в консоль ответа
+        # async with aiohttp.ClientSession() as session:
+        #     async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
+        #         data = await response.read()                                    #чтение ответа
+        #         data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
+        #         print(data)                                                     #вывод в консоль ответа
 
-        or_id = data['result'][0]['order_id']
-        type_id = data['result'][0]['type_id']                                  # вытягиваем id заказа
+        or_id = r[9:12]
+        type_id = int(r[21:])                                                     # вытягиваем id заказа
         print(type_id)
         print(or_id)
         restart = {
             'jsonrpc': '2.0',
-            'method': 'order.autodispatch.restart',                                      # метод для перезапуска автораспределения
+            'method': 'order.broadcast.send',                                      # метод для перезапуска автораспределения
             'params': {
                 'order_id': or_id,
             },
             'id': 100500
         }
+        print(restart)
 
         if type_id == 6:                                                                    #условие по type_id заказа (запуск, если =6)
             async with ClientSession() as session:
                 async with session.post(url, json=restart) as res:
                     res = await res.read()
                     res = json.loads(res.decode('utf-8'))
-                    print(res)
                     if 'error' in res:
                         print('Произошла ошибка: ' + str(res['error']))
                     elif 'result' in res:
