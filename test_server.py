@@ -13,22 +13,7 @@ async def hello(request):                                                   #ф�
 
     if "order_id" in r:                                                     #условие на создание заказа
 
-
         url = 'https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc'
-
-        # resrart = {                                                         #параметры с ключами на получение order.list
-        #    "jsonrpc":"2.0",
-        #    "method":"order.list",
-        #    "params":{},
-        #    'id': 100500
-        # }
-        # print(resrart)
-
-        # async with aiohttp.ClientSession() as session:
-        #     async with session.post(url, json=resrart) as response:             #отправка запроса и получение ответа
-        #         data = await response.read()                                    #чтение ответа
-        #         data = json.loads(data.decode('utf-8'))                         #декодировка ответа в utf-8, парсинг json
-        #         print(data)                                                     #вывод в консоль ответа
 
         or_id = r[9:12]
         type_id = int(r[21:])                                                     # вытягиваем id заказа
