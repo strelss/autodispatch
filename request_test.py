@@ -3,10 +3,10 @@ import json
 
 req = {
        "jsonrpc":"2.0",
-       "method":"order.update",
+       "method":"order.state",
        "params":{
-          "order_id":'470',
-          "type_id":'6'
+          "order_id": '509',
+          "state": '6'
        },
        "id":100500
     }
@@ -22,7 +22,7 @@ req2 = {
        'id': 100500
     }
 req2 = json.dumps(req2)
-print(req2)
+# print(req2)
 
 req3 = {
        "jsonrpc":"2.0",
@@ -33,7 +33,7 @@ req3 = {
        'id': 100500
     }
 req2 = json.dumps(req2)
-print(req3)
+# print(req3)
 
 # This is connect json
 # result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
@@ -46,6 +46,6 @@ print(req3)
 # print(result)
 
 
-result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req2)
+result = requests.post('https://vs:191ebefa672a7c8ac21417dcb5319b01@api-demo-kiev.ligataxi.com/rpc', req)
 result = result.json()
 print(result)
